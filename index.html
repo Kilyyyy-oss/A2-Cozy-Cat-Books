@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cozy Cat & Books | A2 Modelo 3D</title>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js"></script>
+<style>
+:root{font-family:system-ui,Arial,sans-serif;color:#59483c;background:#f6e9d9}
+*{box-sizing:border-box}body{margin:0}main{max-width:1100px;margin:auto;padding:32px 20px;text-align:center}
+small{letter-spacing:.18em;text-transform:uppercase;color:#977d69}h1{font-family:Georgia,serif;font-size:clamp(2.3rem,6vw,4.2rem);margin:12px 0}p{line-height:1.6}
+.viewer{background:#fff8ef;border-radius:24px;box-shadow:0 15px 40px #65472b1a;overflow:hidden;margin:25px 0}
+model-viewer{width:100%;height:min(65vh,620px);min-height:360px;--poster-color:#fff8ef}
+.controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:22px 0}
+button{border:0;background:#886750;color:white;border-radius:12px;padding:13px 20px;font-size:1rem;cursor:pointer}
+button:hover{background:#674b39}footer{font-size:.85rem;color:#806b5b;margin-top:25px}
+</style>
+</head>
+<body><main>
+<small>A2 · Modelo 3D interactivo</small>
+<h1>Cozy Cat & Books</h1>
+<p>Un pequeño rincón para leer, descansar y disfrutar de una taza caliente.</p>
+<div class="viewer">
+<model-viewer id="gato" src="./cat_and_books.glb"
+alt="Gatito naranja con bufanda junto a libros y una taza azul"
+camera-controls auto-rotate auto-rotate-delay="0"
+rotation-per-second="18deg" interaction-prompt="none"
+shadow-intensity="1" exposure="1" camera-orbit="0deg 75deg auto"
+touch-action="pan-y">
+<p>Si no aparece el modelo, abre esta página desde GitHub Pages o un servidor local.</p>
+</model-viewer></div>
+<div class="controls">
+<button id="toggle" type="button">Pausar giro</button>
+<button id="front" type="button">Ver de frente</button>
+<button id="reset" type="button">Reiniciar vista</button>
+</div>
+<p>Arrastra el modelo para girarlo. Usa la rueda del mouse para acercar o alejar.</p>
+<footer>Modelo 3D «Cat and books» de Veksell (Sketchfab). Uso académico.</footer>
+</main>
+<script>
+const gato=document.querySelector('#gato');
+const toggle=document.querySelector('#toggle');
+function setRotate(on){gato.autoRotate=on;toggle.textContent=on?'Pausar giro':'Activar giro'}
+toggle.addEventListener('click',()=>setRotate(!gato.autoRotate));
+document.querySelector('#front').addEventListener('click',()=>{
+ setRotate(false);gato.cameraOrbit='0deg 75deg auto';
+});
+document.querySelector('#reset').addEventListener('click',()=>{
+ gato.cameraOrbit='0deg 75deg auto';gato.jumpCameraToGoal();setRotate(true);
+});
+gato.addEventListener('error',e=>console.error('Error cargando modelo:',e));
+</script></body></html>
